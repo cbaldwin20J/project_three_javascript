@@ -242,6 +242,41 @@ form.addEventListener('submit', function(event) {
 		submitCounter += 1;
 	} 
 
+	// check credit card number
+	let ifCreditCard = document.getElementById('payment');
+	if (ifCreditCard.value == "credit card") {
+		let cardNumber = document.getElementById('cc-num');
+		if (cardNumber.value.length >= 13 && cardNumber.value.length <= 16){
+		}else{
+			let cardNumberValidator = document.createElement('span');
+			cardNumberValidator.innerText = "  Card number must be between 13-16 characters long";
+			cardNumberValidator.classList.add('validator');
+			cardNumberValidator.style.color = 'red';
+
+			cardNumber.previousElementSibling.append(cardNumberValidator);
+			submitCounter += 1;
+		}
+		let zipCode = document.getElementById('zip');
+		if (zipCode.value.length != 5){
+			let zipcodeValidator = document.createElement('span');
+			zipcodeValidator.innerText = "  Zip code must be 5 characters long";
+			zipcodeValidator.classList.add('validator');
+			zipcodeValidator.style.color = 'red';
+
+			zipCode.previousElementSibling.append(zipcodeValidator);
+			submitCounter += 1;
+		}
+		let cvv = document.getElementById('cvv');
+		if (cvv.value.length != 3){
+			let cvvValidator = document.createElement('span');
+			cvvValidator.innerText = "  CVV must be 3 characters long";
+			cvvValidator.classList.add('validator');
+			cvvValidator.style.color = 'red';
+
+			cvv.previousElementSibling.append(cvvValidator);
+			submitCounter += 1;
+		}
+	}
 
 	// if there is an error, then prevent the submission
 	if (submitCounter > 0) {
