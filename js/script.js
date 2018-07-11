@@ -227,7 +227,20 @@ form.addEventListener('submit', function(event) {
 		emailInput.parentNode.insertBefore(emailValidator, emailInput);
 		submitCounter += 1;
 	}
-	  
+	 
+	// validator to make sure 'register for activities'
+	// has at least one activity checked
+	let activityFieldset = document.querySelector('.activities');
+	let totalNum = document.querySelector('.totalsNumber');
+	if (parseInt(totalNum.innerText) == 0) {
+		let activityValidator = document.createElement('p');
+		activityValidator.innerText = "Must choose at least one activity.";
+		activityValidator.classList.add('validator');
+		activityValidator.style.color = 'red';
+
+		activityFieldset.children[0].append(activityValidator);
+		submitCounter += 1;
+	} 
 
 
 	// if there is an error, then prevent the submission
