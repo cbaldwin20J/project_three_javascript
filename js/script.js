@@ -190,6 +190,53 @@ paymentSelector.addEventListener('change', (e) => {
 });
 
 
+let form = document.querySelector('form');
+form.addEventListener('submit', function(event) {
+	// get rid of all the previous validator messages
+	let removeValidatorClass = document.getElementsByClassName('validator');
+	console.log('length: ' + removeValidatorClass.length)
+	while(removeValidatorClass[0]) {
+		console.log("in the while loop");
+		removeValidatorClass[0].parentNode.removeChild(removeValidatorClass[0]);
+	}
+	
+	// validator to make sure 'Name' is not blank.
+	let nameInput = document.querySelector('#name');
+	let submitCounter = 0;
+	if (nameInput.value.trim() == "") {
+		let nameValidator = document.createElement('p');
+		nameValidator.innerText = "Name is required"
+		nameValidator.classList.add('validator');
+		nameValidator.style.color = 'red';
+
+		nameInput.parentNode.insertBefore(nameValidator, nameInput);
+		submitCounter += 1;
+	}
+
+	// validator to make sure email is valid format
+	let emailInput = document.getElementById('mail');
+	
+	if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(emailInput.value)) {
+	}else{
+		console.log("got past if");
+		let emailValidator = document.createElement('p');
+		emailValidator.innerText = "Email in proper format is required"
+		emailValidator.classList.add('validator');
+		emailValidator.style.color = 'red';
+
+		emailInput.parentNode.insertBefore(emailValidator, emailInput);
+		submitCounter += 1;
+	}
+	  
+
+
+	// if there is an error, then prevent the submission
+	if (submitCounter > 0) {
+		console.log('got past submit counter')
+		event.preventDefault();
+	}
+});
+
 // adds the messages to the activities portion.
 function start() {
 
