@@ -49,7 +49,7 @@ tshirtSelectors.addEventListener('change', (e) => {
 });
 
 
-
+// Register for activities section.
 let activitiesFieldset = document.getElementsByClassName("activities")[0];
 activitiesFieldset.addEventListener('change', (e) => {
 
@@ -165,8 +165,31 @@ activitiesFieldset.addEventListener('change', (e) => {
 	}
 
 });
-"js-frameworks", "express", "build-tools"
-"js-libs", "node", "npm"
+
+
+let paymentSelector = document.getElementById('payment');
+paymentSelector.addEventListener('change', (e) => {
+	let creditCardSection = document.getElementById('credit-card');
+	let payPalSection = creditCardSection.nextElementSibling;
+	let bitcoinSection = payPalSection.nextElementSibling;
+
+	function showAndHideSections(credit, paypal, bitcoin) {
+		creditCardSection.style.display = credit;
+		payPalSection.style.display = paypal;
+		bitcoinSection.style.display = bitcoin;
+	}
+
+	if (e.target.value == "credit card") {
+		showAndHideSections("", 'none', 'none');
+	}else if(e.target.value == "paypal") {
+		showAndHideSections('none', "", 'none');
+	}else if(e.target.value == 'bitcoin') {
+		showAndHideSections('none', 'none', "");
+	}
+
+});
+
+
 // adds the messages to the activities portion.
 function start() {
 
@@ -191,6 +214,10 @@ function start() {
 	total.appendChild(totalNum);
 	total.style.display = 'none';
 	activitiesFieldset.appendChild(total);
+
+	let disableSelectPaymentField = document.querySelector('option[value=select_method]');
+	disableSelectPaymentField.disabled = true;
+	disableSelectPaymentField.parentNode.value = "credit card"
 
 }
 
