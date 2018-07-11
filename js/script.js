@@ -21,6 +21,32 @@ jobRoleInput.addEventListener('change', (e) => {
 });
 
 
+
+let emailInput = document.getElementById('mail');
+emailInput.addEventListener('keyup', (e) => {
+	let eraseValidator = document.getElementById('validatorEmailKeyup');
+	if (eraseValidator) {
+		eraseValidator.parentNode.removeChild(eraseValidator);
+	}
+	let eraseMainValidator = document.getElementById('eraseMainValidator');
+	if (eraseMainValidator) {
+		eraseMainValidator.parentNode.removeChild(eraseMainValidator);
+	}
+
+	if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(emailInput.value)) {
+	}else{
+		console.log("got past if");
+		let emailValidator = document.createElement('p');
+		emailValidator.innerText = "Email in proper format is required"
+		emailValidator.setAttribute('id', 'validatorEmailKeyup');
+		emailValidator.style.color = 'red';
+
+		emailInput.parentNode.insertBefore(emailValidator, emailInput);
+		
+	}
+});	
+	
+
 // for the tshirt info section. The colors options adjusts to the
 // theme option that is chosen.
 let tshirtSelectors = document.getElementsByClassName("shirt")[0];
@@ -200,6 +226,12 @@ form.addEventListener('submit', function(event) {
 		removeValidatorClass[0].parentNode.removeChild(removeValidatorClass[0]);
 	}
 	
+	// erasing the email keyup validator
+	let eraseValidator = document.getElementById('validatorEmailKeyup');
+	if (eraseValidator) {
+		eraseValidator.parentNode.removeChild(eraseValidator);
+	}
+
 	// validator to make sure 'Name' is not blank.
 	let nameInput = document.querySelector('#name');
 	let submitCounter = 0;
@@ -222,6 +254,9 @@ form.addEventListener('submit', function(event) {
 		let emailValidator = document.createElement('p');
 		emailValidator.innerText = "Email in proper format is required"
 		emailValidator.classList.add('validator');
+		// this #id is for the keyup email at the top of the file.
+		// to make it easier to erase this.
+		emailValidator.setAttribute('id', 'eraseMainValidator');
 		emailValidator.style.color = 'red';
 
 		emailInput.parentNode.insertBefore(emailValidator, emailInput);
