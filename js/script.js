@@ -51,9 +51,13 @@ emailInput.addEventListener('keyup', (e) => {
 // theme option that is chosen.
 let tshirtSelectors = document.getElementsByClassName("shirt")[0];
 tshirtSelectors.addEventListener('change', (e) => {
+	let hideOrShowColorsDiv = document.getElementById('colors-js-puns');
 	if (e.target.getAttribute('id') == 'design') {
 		let colors = document.querySelector('#color');
-		function colorsDisplay(displaySettingPuns, displaySettingHeart) {
+		function colorsDisplay(
+			displaySettingPuns,
+			 displaySettingHeart,
+			 colorsDiv) {
 			colors.children[0].style.display = displaySettingHeart;
 			colors.children[1].style.display = displaySettingHeart;
 			colors.children[2].style.display = displaySettingHeart;
@@ -61,18 +65,22 @@ tshirtSelectors.addEventListener('change', (e) => {
 			colors.children[3].style.display = displaySettingPuns;
 			colors.children[4].style.display = displaySettingPuns;
 			colors.children[5].style.display = displaySettingPuns;
+
+			hideOrShowColorsDiv.style.display = colorsDiv;
 		}
 		if (e.target.value == 'js puns') {
-			colorsDisplay('none', "");
+			colorsDisplay('none', "", '');
 			colors.children[0].selected = 'selected';
 		}else if (e.target.value == 'heart js'){
-			colorsDisplay('', 'none');
+			colorsDisplay('', 'none', '');
 			colors.children[3].selected = 'selected';
 		}else{
-			colorsDisplay('', '');
+			colorsDisplay('', '', 'none');
+
 		}
 	}
 });
+
 
 
 // Register for activities section.
@@ -284,7 +292,12 @@ form.addEventListener('submit', function(event) {
 		if (cardNumber.value.length >= 13 && cardNumber.value.length <= 16){
 		}else{
 			let cardNumberValidator = document.createElement('span');
-			cardNumberValidator.innerText = "  Card number must be between 13-16 characters long";
+			if (cardNumber.value.length<1) {
+				cardNumberValidator.innerText = "  Please enter a credit card number.";
+			}else{
+				cardNumberValidator.innerText = "  Card number must be between 13-16 characters long";
+			}
+			
 			cardNumberValidator.classList.add('validator');
 			cardNumberValidator.style.color = 'red';
 
@@ -349,6 +362,9 @@ function start() {
 	disableSelectPaymentField.disabled = true;
 	disableSelectPaymentField.parentNode.value = "credit card"
 
+	// under tshirts, hide 'colors' until a theme is selected.
+	let hideOrShowColorsDiv = document.getElementById('colors-js-puns');
+	hideOrShowColorsDiv.style.display = 'none';
 }
 
 start();
