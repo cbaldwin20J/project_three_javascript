@@ -5,25 +5,20 @@ document.getElementById("name").focus();
 // then a text field appears.
 let jobRoleInput = document.getElementById("title");
 jobRoleInput.addEventListener('change', (e) => {
-	let fieldset = document.querySelector('fieldset');
-
+	let otherInput = document.getElementById('other-title');
 	if (e.target.value == "other") {
-		let otherInput = document.createElement('input');
-		otherInput.setAttribute('id', 'other-title');
-		otherInput.setAttribute('placeholder', 'Your Job Role');
-		fieldset.append(otherInput);
+		otherInput.style.display = '';
 	}else {
-		let eraseOtherInput = document.querySelector('#other-title');
-		if (eraseOtherInput) {
-			fieldset.removeChild(eraseOtherInput);
+		otherInput.style.display = 'none';
 		}
-	}
 });
 
 
-
+// sets up the keyup validator for the email field
 let emailInput = document.getElementById('mail');
 emailInput.addEventListener('keyup', (e) => {
+	// every keyup, take away both the keyup validator and the
+	// validator the submit button creates.
 	let eraseValidator = document.getElementById('validatorEmailKeyup');
 	if (eraseValidator) {
 		eraseValidator.parentNode.removeChild(eraseValidator);
@@ -33,16 +28,15 @@ emailInput.addEventListener('keyup', (e) => {
 		eraseMainValidator.parentNode.removeChild(eraseMainValidator);
 	}
 
+	// So if it is a valid email format, do nothing, else put validator.
 	if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(emailInput.value)) {
 	}else{
-		console.log("got past if");
 		let emailValidator = document.createElement('p');
-		emailValidator.innerText = "Email in proper format is required"
+		emailValidator.innerText = "Email in proper format is required";
 		emailValidator.setAttribute('id', 'validatorEmailKeyup');
 		emailValidator.style.color = 'red';
 
 		emailInput.parentNode.insertBefore(emailValidator, emailInput);
-		
 	}
 });	
 	
@@ -54,6 +48,8 @@ tshirtSelectors.addEventListener('change', (e) => {
 	let hideOrShowColorsDiv = document.getElementById('colors-js-puns');
 	if (e.target.getAttribute('id') == 'design') {
 		let colors = document.querySelector('#color');
+		// function to show or hide the hearts and puns
+		// also hide the color block until a theme is selected.
 		function colorsDisplay(
 			displaySettingPuns,
 			 displaySettingHeart,
@@ -76,25 +72,24 @@ tshirtSelectors.addEventListener('change', (e) => {
 			colors.children[3].selected = 'selected';
 		}else{
 			colorsDisplay('', '', 'none');
-
 		}
 	}
 });
-
 
 
 // Register for activities section.
 let activitiesFieldset = document.getElementsByClassName("activities")[0];
 activitiesFieldset.addEventListener('change', (e) => {
 
+	// sets the total cost at the bottom.
 	function showTotal(num) {
-		
 		let total = document.querySelector('.totalsParagraph');
 		let totalNum = document.querySelector('.totalsNumber');
 		let newNum = parseInt(totalNum.innerText);
 		newNum += num;
 		totalNum.innerText = newNum;
 
+		// if total cost is $0, then just hide it.
 		if (newNum == 0) {
 			total.style.display = "none";
 		}else{
@@ -102,18 +97,19 @@ activitiesFieldset.addEventListener('change', (e) => {
 		}
 	};
 
+	// Will put a conflicting time validator on the activities
 	function showConflictMessage(showYesorNo, index) {
 		let spanMessage = activitiesFieldset.children[index].lastElementChild;
-		console.log(showYesorNo);
 		if (showYesorNo) {
 			spanMessage.style.display = "";
-			console.log(spanMessage);
 		}else {
 			spanMessage.style.display = 'none';
 		}
 		
 	}
 	
+	// will disable the checkboxes of activities with conflicting times.
+	// for the 9 to 12 slots.
 	function disableCorrectCheckmarks9to12(
 		isDisabled9to12two, isDisabled9to12four, isDisabled9to12six){
 
@@ -128,6 +124,8 @@ activitiesFieldset.addEventListener('change', (e) => {
 	}
 
 
+	// will disable the checkboxes of activities with conflicting times.
+	// for the 1 to 4 slots.
 	function disableCorrectCheckmarks1to4(
 		isDisabled1to4three, isDisabled1to4five, isDisabled1to4seven){
 
@@ -141,7 +139,9 @@ activitiesFieldset.addEventListener('change', (e) => {
 		showConflictMessage(isDisabled1to4seven, 7);
 	}
 
-	
+	// this will add or subtract the cost for whatever
+	// activity was checked, and call for conflicting times
+	// to be disabled.
 	if (e.target.getAttribute('name') == "all") {
 		if (e.target.checked) {
 			showTotal(200)
@@ -197,22 +197,24 @@ activitiesFieldset.addEventListener('change', (e) => {
 			showTotal(-100)
 		}
 	}
-
 });
 
 
+//  this is for the payment section.
 let paymentSelector = document.getElementById('payment');
 paymentSelector.addEventListener('change', (e) => {
 	let creditCardSection = document.getElementById('credit-card');
 	let payPalSection = creditCardSection.nextElementSibling;
 	let bitcoinSection = payPalSection.nextElementSibling;
 
+	// will show the one that's selected, and hide the others.
 	function showAndHideSections(credit, paypal, bitcoin) {
 		creditCardSection.style.display = credit;
 		payPalSection.style.display = paypal;
 		bitcoinSection.style.display = bitcoin;
 	}
 
+	// will show the one that's selected, and hide the others. 
 	if (e.target.value == "credit card") {
 		showAndHideSections("", 'none', 'none');
 	}else if(e.target.value == "paypal") {
@@ -220,17 +222,15 @@ paymentSelector.addEventListener('change', (e) => {
 	}else if(e.target.value == 'bitcoin') {
 		showAndHideSections('none', 'none', "");
 	}
-
 });
 
 
+// When the form is submitted.
 let form = document.querySelector('form');
 form.addEventListener('submit', function(event) {
 	// get rid of all the previous validator messages
 	let removeValidatorClass = document.getElementsByClassName('validator');
-	console.log('length: ' + removeValidatorClass.length)
 	while(removeValidatorClass[0]) {
-		console.log("in the while loop");
 		removeValidatorClass[0].parentNode.removeChild(removeValidatorClass[0]);
 	}
 	
@@ -258,7 +258,6 @@ form.addEventListener('submit', function(event) {
 	
 	if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(emailInput.value)) {
 	}else{
-		console.log("got past if");
 		let emailValidator = document.createElement('p');
 		emailValidator.innerText = "Email in proper format is required"
 		emailValidator.classList.add('validator');
@@ -328,14 +327,14 @@ form.addEventListener('submit', function(event) {
 
 	// if there is an error, then prevent the submission
 	if (submitCounter > 0) {
-		console.log('got past submit counter')
 		event.preventDefault();
 	}
 });
 
-// adds the messages to the activities portion.
-function start() {
 
+// kickstarts the form when page is loaded.
+function start() {
+	// sets the conflicting time validators but hides them.
 	let activitiesFieldset = document.getElementsByClassName("activities")[0];
 	for (i =1; i < activitiesFieldset.children.length; i+=1) {
 		let conflictingTimeMessage = document.createElement('span');
@@ -345,9 +344,9 @@ function start() {
 		conflictingTimeMessage.style.display = 'none';
 
 		activitiesFieldset.children[i].appendChild(conflictingTimeMessage);
-		console.log(i);
 	}
 
+	// creates the total cost <p></p> but hides it.
 	let total = document.createElement('p');
 	total.classList.add('totalsParagraph');
 	total.innerText = "Total: $"
@@ -358,6 +357,7 @@ function start() {
 	total.style.display = 'none';
 	activitiesFieldset.appendChild(total);
 
+	// disables the 'select method' option in the payment section.
 	let disableSelectPaymentField = document.querySelector('option[value=select_method]');
 	disableSelectPaymentField.disabled = true;
 	disableSelectPaymentField.parentNode.value = "credit card"
@@ -365,6 +365,13 @@ function start() {
 	// under tshirts, hide 'colors' until a theme is selected.
 	let hideOrShowColorsDiv = document.getElementById('colors-js-puns');
 	hideOrShowColorsDiv.style.display = 'none';
+
+	// hide the 'other' input.
+	let otherInput = document.getElementById('other-title');
+	otherInput.style.display = 'none';
+
+	// start off the value for job role 
+	document.getElementById('title').value = 'full-stack js developer';
 }
 
 start();
