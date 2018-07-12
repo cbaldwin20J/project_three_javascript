@@ -1,5 +1,3 @@
-// focus on the first input when page loads
-document.getElementById("name").focus();
 
 // for the job role section, if they select 'other'
 // then a text field appears.
@@ -334,6 +332,9 @@ form.addEventListener('submit', function(event) {
 
 // kickstarts the form when page is loaded.
 function start() {
+	// focus on the first input when page loads
+	document.getElementById("name").focus();
+	
 	// sets the conflicting time validators but hides them.
 	let activitiesFieldset = document.getElementsByClassName("activities")[0];
 	for (i =1; i < activitiesFieldset.children.length; i+=1) {
