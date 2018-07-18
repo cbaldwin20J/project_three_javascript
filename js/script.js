@@ -116,9 +116,6 @@ activitiesFieldset.addEventListener('change', (e) => {
 		
 		activitiesFieldset.children[4].firstElementChild.disabled = isDisabled9to12four;
 		showConflictMessage(isDisabled9to12four, 4);
-
-		activitiesFieldset.children[6].firstElementChild.disabled = isDisabled9to12six;
-		showConflictMessage(isDisabled9to12six, 6);
 	}
 
 
@@ -132,9 +129,6 @@ activitiesFieldset.addEventListener('change', (e) => {
 		
 		activitiesFieldset.children[5].firstElementChild.disabled = isDisabled1to4five;
 		showConflictMessage(isDisabled1to4five, 5);
-
-		activitiesFieldset.children[7].firstElementChild.disabled = isDisabled1to4seven;
-		showConflictMessage(isDisabled1to4seven, 7);
 	}
 
 	// this will add or subtract the cost for whatever
@@ -164,10 +158,10 @@ activitiesFieldset.addEventListener('change', (e) => {
 		}
 	}else if(e.target.getAttribute('name') == "build-tools"){
 		if (e.target.checked) {
-			disableCorrectCheckmarks9to12(true, true, false);
+			
 			showTotal(100)
 		}else {
-			disableCorrectCheckmarks9to12(false, false, false);
+			
 			showTotal(-100)
 		}
 	}else if(e.target.getAttribute('name') == "js-libs"){
@@ -188,10 +182,10 @@ activitiesFieldset.addEventListener('change', (e) => {
 		}
 	}else if(e.target.getAttribute('name') == "npm"){
 		if (e.target.checked) {
-			disableCorrectCheckmarks1to4(true, true, false);
+			
 			showTotal(100)
 		}else {
-			disableCorrectCheckmarks1to4(false, false, false);
+			
 			showTotal(-100)
 		}
 	}
