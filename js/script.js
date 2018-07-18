@@ -317,6 +317,23 @@ form.addEventListener('submit', function(event) {
 		}
 	}
 
+	// if 'other' field is displayed and is empty then
+	// throw a validator
+	let otherInput = document.getElementById('title');
+	let otherInputField = document.getElementById('other-title');
+	
+	if(otherInput.value == "other"){
+		if(otherInputField.value.trim() == ""){
+			otherValidator = document.createElement('p');
+			otherValidator.innerText = "    Other field must be filled out";
+			otherValidator.classList.add('validator');
+			otherValidator.style.color = 'red';
+			otherInput.previousElementSibling.append(otherValidator);
+			submitCounter += 1;
+		}
+		
+	}
+	
 	// if there is an error, then prevent the submission
 	if (submitCounter > 0) {
 		event.preventDefault();
